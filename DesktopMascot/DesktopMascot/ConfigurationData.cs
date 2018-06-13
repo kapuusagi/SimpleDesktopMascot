@@ -30,7 +30,7 @@ namespace DesktopMascot
             picturePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyPictures);
             configurationPath = "";
             displayRatio = 100.0f;
-            opacity = 0.0f;
+            opacity = 100.0f;
         }
 
         /// <summary>
@@ -50,7 +50,8 @@ namespace DesktopMascot
             set { picturePath = value; }
         }
         /// <summary>
-        /// 表示倍率を取得または設定する。
+        /// 表示倍率(%)を取得または設定する。
+        /// 割合(%)であることに注意。100の時に等倍。
         /// </summary>
         public float DisplayRatio
         {
@@ -60,6 +61,7 @@ namespace DesktopMascot
 
         /// <summary>
         /// 不透明度の設定
+        /// 割合(%)で扱うことに注意。
         /// </summary>
         public float Opacity
         {
@@ -103,7 +105,7 @@ namespace DesktopMascot
             {
                 return false;
             }
-            char[] delimters = { ' ', '\t', '\r', 'n' };
+            char[] delimters = { ' ', '\t', '\r', '\n' };
 
             // TODO: 
             using (System.IO.StreamReader sr = System.IO.File.OpenText(path))

@@ -76,6 +76,8 @@ namespace DesktopMascot
                     SetBounds(Left, Top, width, height);
                 }
                 BackgroundImage = mascotImage;
+                double opacity = data.Opacity;
+                Opacity = (opacity > 10.0f) ? (opacity / 100.0) : 0.1;
             }
             catch (Exception)
             {
