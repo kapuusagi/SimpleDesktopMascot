@@ -36,18 +36,23 @@
             this.groupBoxImagePath = new System.Windows.Forms.GroupBox();
             this.trackBarDisplayRatio = new System.Windows.Forms.TrackBar();
             this.groupBoxDisplaySize = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelDisplayRatio = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.labelDisplaySize = new System.Windows.Forms.Label();
-            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            this.label1 = new System.Windows.Forms.Label();
+            this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.groupBoxOpacity = new System.Windows.Forms.GroupBox();
+            this.trackBarOpacity = new System.Windows.Forms.TrackBar();
+            this.labelOpacity = new System.Windows.Forms.Label();
             this.groupBoxImagePath.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarDisplayRatio)).BeginInit();
             this.groupBoxDisplaySize.SuspendLayout();
+            this.groupBoxOpacity.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarOpacity)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonApply
             // 
-            this.buttonApply.Location = new System.Drawing.Point(209, 176);
+            this.buttonApply.Location = new System.Drawing.Point(202, 272);
             this.buttonApply.Name = "buttonApply";
             this.buttonApply.Size = new System.Drawing.Size(75, 23);
             this.buttonApply.TabIndex = 0;
@@ -57,7 +62,7 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Location = new System.Drawing.Point(290, 176);
+            this.buttonCancel.Location = new System.Drawing.Point(298, 272);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 1;
@@ -110,7 +115,7 @@
             // 
             // groupBoxDisplaySize
             // 
-            this.groupBoxDisplaySize.Controls.Add(this.labelDisplaySize);
+            this.groupBoxDisplaySize.Controls.Add(this.labelDisplayRatio);
             this.groupBoxDisplaySize.Controls.Add(this.label2);
             this.groupBoxDisplaySize.Controls.Add(this.label1);
             this.groupBoxDisplaySize.Controls.Add(this.trackBarDisplayRatio);
@@ -121,14 +126,14 @@
             this.groupBoxDisplaySize.TabStop = false;
             this.groupBoxDisplaySize.Text = "Display Size";
             // 
-            // label1
+            // labelDisplayRatio
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 66);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(23, 12);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "10%";
+            this.labelDisplayRatio.AutoSize = true;
+            this.labelDisplayRatio.Location = new System.Drawing.Point(148, 62);
+            this.labelDisplayRatio.Name = "labelDisplayRatio";
+            this.labelDisplayRatio.Size = new System.Drawing.Size(23, 12);
+            this.labelDisplayRatio.TabIndex = 8;
+            this.labelDisplayRatio.Text = "xx%";
             // 
             // label2
             // 
@@ -139,26 +144,51 @@
             this.label2.TabIndex = 7;
             this.label2.Text = "400%";
             // 
-            // labelDisplaySize
+            // label1
             // 
-            this.labelDisplaySize.AutoSize = true;
-            this.labelDisplaySize.Location = new System.Drawing.Point(148, 62);
-            this.labelDisplaySize.Name = "labelDisplaySize";
-            this.labelDisplaySize.Size = new System.Drawing.Size(23, 12);
-            this.labelDisplaySize.TabIndex = 8;
-            this.labelDisplaySize.Text = "xx%";
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(15, 66);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(23, 12);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "10%";
             // 
-            // openFileDialog
+            // groupBoxOpacity
             // 
-            this.openFileDialog.AddExtension = false;
-            this.openFileDialog.FileName = "openFileDialog";
-            this.openFileDialog.Filter = "BMPファイル(*.bmp)|*.bmp|JPEGファイル(*.jpg)|*.jpg|PNGファイル|*.png|すべてのファイル|*.*";
+            this.groupBoxOpacity.Controls.Add(this.labelOpacity);
+            this.groupBoxOpacity.Controls.Add(this.trackBarOpacity);
+            this.groupBoxOpacity.Location = new System.Drawing.Point(13, 177);
+            this.groupBoxOpacity.Name = "groupBoxOpacity";
+            this.groupBoxOpacity.Size = new System.Drawing.Size(352, 80);
+            this.groupBoxOpacity.TabIndex = 7;
+            this.groupBoxOpacity.TabStop = false;
+            this.groupBoxOpacity.Text = "Opacity";
+            // 
+            // trackBarOpacity
+            // 
+            this.trackBarOpacity.Location = new System.Drawing.Point(16, 19);
+            this.trackBarOpacity.Minimum = 1;
+            this.trackBarOpacity.Name = "trackBarOpacity";
+            this.trackBarOpacity.Size = new System.Drawing.Size(321, 45);
+            this.trackBarOpacity.TabIndex = 0;
+            this.trackBarOpacity.Value = 10;
+            this.trackBarOpacity.ValueChanged += new System.EventHandler(this.OpacityTrackbar_ValueChange);
+            // 
+            // labelOpacity
+            // 
+            this.labelOpacity.AutoSize = true;
+            this.labelOpacity.Location = new System.Drawing.Point(147, 52);
+            this.labelOpacity.Name = "labelOpacity";
+            this.labelOpacity.Size = new System.Drawing.Size(23, 12);
+            this.labelOpacity.TabIndex = 1;
+            this.labelOpacity.Text = "xx%";
             // 
             // ConfigurationEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(385, 214);
+            this.ClientSize = new System.Drawing.Size(385, 315);
+            this.Controls.Add(this.groupBoxOpacity);
             this.Controls.Add(this.groupBoxDisplaySize);
             this.Controls.Add(this.groupBoxImagePath);
             this.Controls.Add(this.buttonCancel);
@@ -172,6 +202,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.trackBarDisplayRatio)).EndInit();
             this.groupBoxDisplaySize.ResumeLayout(false);
             this.groupBoxDisplaySize.PerformLayout();
+            this.groupBoxOpacity.ResumeLayout(false);
+            this.groupBoxOpacity.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarOpacity)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -185,9 +218,12 @@
         private System.Windows.Forms.GroupBox groupBoxImagePath;
         private System.Windows.Forms.TrackBar trackBarDisplayRatio;
         private System.Windows.Forms.GroupBox groupBoxDisplaySize;
-        private System.Windows.Forms.Label labelDisplaySize;
-        private System.Windows.Forms.OpenFileDialog openFileDialog;
+        private System.Windows.Forms.Label labelDisplayRatio;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
+        private System.Windows.Forms.GroupBox groupBoxOpacity;
+        private System.Windows.Forms.Label labelOpacity;
+        private System.Windows.Forms.TrackBar trackBarOpacity;
     }
 }

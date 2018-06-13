@@ -34,8 +34,6 @@ namespace DesktopMascot
             data = new ConfigurationData();
             data.LoadSetting();
 
-            TransparencyKey = BackColor;
-
             try
             {
                 ApplyConfiguration();
@@ -51,6 +49,9 @@ namespace DesktopMascot
         {
             try
             {
+                TransparencyKey = BackColor;
+                Visible = false;
+
                 LoadImage();
                 if (mascotImage != null)
                 {
@@ -72,8 +73,20 @@ namespace DesktopMascot
                             height = (int)(mascotImage.Height * yRatio);
                         }
                     }
+                    
 
-                    SetBounds(Left, Top, width, height);
+                    try
+                    {
+                        // Note: ウィンドウをリサイズする時、BackgroundImageはnullにしておかないと
+                        //       ArgumentExceptionが発生することがある。（サイズが大きくなる時に発生するようだ）
+                        //       なかなか厄介。
+                        BackgroundImage = null;
+                        SetBounds(Left, Top, width, height);
+                    }
+                    catch (ArgumentException e)
+                    {
+                        String.Format("{0} : Top={1} Left={2} width={3} height={4}", e.Message, Left, Top, width, height);
+                    }
                 }
                 BackgroundImage = mascotImage;
                 double opacity = data.Opacity;
@@ -83,6 +96,7 @@ namespace DesktopMascot
             {
                 // Do nothing.
             }
+            Visible = true;
 
             this.Invalidate(); // コンポーネントを再描画する。
         }
@@ -239,7 +253,17 @@ namespace DesktopMascot
                 ConfigurationData.ConfigurationFileName);
             data.SaveConfiguration(file_path);
 
+            Visible = false;
             ApplyConfiguration();
+        }
+
+        private void MainForm_SizeChanged(object sender, EventArgs e)
+        {
+            if (!Visible)
+            {
+                //BackgroundImage = mascotImage;
+                //Visible = true;
+            }
         }
     }
 }

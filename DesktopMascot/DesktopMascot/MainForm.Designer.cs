@@ -88,6 +88,7 @@
             this.Text = "デスクトップマスコット";
             this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
+            this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainForm_Paint);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MainForm_MouseDown);
             this.MouseLeave += new System.EventHandler(this.MainForm_MouseLeave);

@@ -10,6 +10,10 @@ using System.Windows.Forms;
 
 namespace DesktopMascot
 {
+    /// <summary>
+    /// 設定を編集するフォーム。
+    /// クラス関係のデザイン的にはViewにデータとコントローラを内包しているのでよろしくない。
+    /// </summary>
     public partial class ConfigurationEditor : Form
     {
         private DialogResult dialogResult;
@@ -22,7 +26,7 @@ namespace DesktopMascot
 
         public void ApplyConfigurationData(ConfigurationData data)
         {
-            labelImagePath.Text = data.ConfigurationPath;
+            labelImagePath.Text = data.PicturePath;
             int displaySize = (int)(data.DisplayRatio);
             if (displaySize < trackBarDisplayRatio.Minimum)
             {
@@ -34,14 +38,31 @@ namespace DesktopMascot
             }
 
             trackBarDisplayRatio.Value = displaySize;
+            labelDisplayRatio.Text = String.Format("{0}%", trackBarDisplayRatio.Value);
+
+            float opacity = data.Opacity;
+            if (opacity > 100.0f)
+            {
+                opacity = 100.0f;
+            } else if (opacity < 10.0f)
+            {
+                opacity = 10.0f;
+            }
+            trackBarOpacity.Value = (int)(opacity / 10);
+            labelOpacity.Text = String.Format("{0}%", trackBarOpacity.Value * 10);
         }
 
+        /// <summary>
+        /// 設定データを取得する。
+        /// </summary>
+        /// <returns>設定データ</returns>
         public ConfigurationData GetConfigurationData()
         {
             ConfigurationData ret = new ConfigurationData();
             ret.PicturePath = labelImagePath.Text;
             ret.DisplayRatio = trackBarDisplayRatio.Value;
-            labelDisplaySize.Text = String.Format("{0}%", trackBarDisplayRatio.Value);
+            ret.Opacity = trackBarOpacity.Value * 10.0f;
+            
 
             return ret;
         }
@@ -70,26 +91,31 @@ namespace DesktopMascot
 
         private void trackBarDisplayRatio_ValueChanged(object sender, EventArgs e)
         {
-            labelDisplaySize.Text = String.Format("{0}%", trackBarDisplayRatio.Value);
+            labelDisplayRatio.Text = String.Format("{0}%", trackBarDisplayRatio.Value);
         }
 
         private void SelectButton_Click(object sender, EventArgs e)
         {
             if ((labelImagePath.Text != null) && (labelImagePath.Text.Length != 0))
             {
-                openFileDialog.FileName = labelImagePath.Text;
+                folderBrowserDialog.SelectedPath = labelImagePath.Text;
             } else
             {
-                openFileDialog.FileName = System.Environment.GetFolderPath(
+                folderBrowserDialog.SelectedPath =System.Environment.GetFolderPath(
                     System.Environment.SpecialFolder.MyPictures);
             }
 
-            DialogResult result = openFileDialog.ShowDialog(this);
+            DialogResult result = folderBrowserDialog.ShowDialog(this);
             if (result != DialogResult.OK)
             {
                 return;
             }
-            labelImagePath.Text = openFileDialog.FileName;
+            labelImagePath.Text = folderBrowserDialog.SelectedPath;
+        }
+
+        private void OpacityTrackbar_ValueChange(object sender, EventArgs e)
+        {
+            labelOpacity.Text = String.Format("{0}%", trackBarOpacity.Value * 10);
         }
     }
 }
